@@ -4,5 +4,5 @@ ENV REFRESHED_AT 2017-06-11
 RUN apt-get update && apt-get install -y \
             libcurl4-openssl-dev \
             libmcrypt-dev \
-    && docker-php-ext-install -j$(nproc) mcrypt mysqli pdo \
+    && docker-php-ext-install -j$(nproc) mcrypt mysqli pdo pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
