@@ -1,0 +1,28 @@
+version: '3'
+# 服务
+services: 
+  php_apache:
+    # image: php:7.1-apache
+    build: ./php_apache  # 镜像源
+    command: apache2-foreground  # bash 启动指令
+    ports:
+      - "80:80"  # 主机：容器端口的映射
+    volumes:
+      # VHost
+      - ./php_apache/vhost/fs2.com.conf:/etc/apache2/sites-enabled/fs2.com.conf
+      # Mount src dir
+      - ./src:/var/www/html/fs2.com
+      # Mount log files
+      - ./php_apache/log:/var/log/fs2/
+      # Mount php config
+      - ./php_apache/my_php.ini:/usr/local/etc/php/conf.d/my_php.ini
+
+  mysql:
+    image: mysql:latest   # 镜像源
+    ports:
+      - "3306:3306"  # 主机：容器端口的映射
+    volumes:
+      - ./data:/var/lib/mysql  # 数据存储位置的映射
+      # - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf    # 数据库配置文件
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes  # root无密码登陆

@@ -1,0 +1,3 @@
+data/
+/php_apache/log/access.log
+/php_apache/log/error.log
