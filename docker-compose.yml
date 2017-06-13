@@ -9,7 +9,9 @@ services:
       - "80:80"  # 主机：容器端口的映射
     volumes:
       # VHost
-      - ./php_apache/vhost/fs2.com.conf:/etc/apache2/sites-enabled/fs2.com.conf
+      - ./php_apache/vhost/:/etc/apache2/sites-enabled/
+      # - ./php_apache/vhost/fs2.com.conf:/etc/apache2/sites-enabled/fs2.com.conf
+      # - ./php_apache/vhost/000-default.conf:/etc/apache2/sites-available/000-default.conf
       # Mount src dir
       - ./src:/var/www/html/fs2.com
       # Mount log files

@@ -20,6 +20,9 @@
 ## APACHE Config ##
 
 - Src Dir `.src:/var/www/html/` (docker-compose.yml)
+- Config files
+  - `fs2.com.conf`: enable fs2.com domain
+  - `000-default.conf`: give all permissions under `.../www/html`
 
 ## MySQL Config ##
 
