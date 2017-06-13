@@ -23,6 +23,6 @@ services:
       - "3306:3306"  # 主机：容器端口的映射
     volumes:
       - ./data:/var/lib/mysql  # 数据存储位置的映射
-      # - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf    # 数据库配置文件
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf    # 数据库配置文件
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes  # root无密码登陆
