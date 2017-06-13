@@ -2,8 +2,19 @@ version: '3'
 # 服务
 services: 
   php_apache:
-    # image: php:7.1-apache
-    build: ./php_apache  # 镜像源
+    # For single node
+    # build: ./php_apache  # 镜像源
+
+    # For swarm
+    image: hmenv_php_apache
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 100M
+      restart_policy:
+        condition: on-failure
     command: apache2-foreground  # bash 启动指令
     ports:
       - "80:80"  # 主机：容器端口的映射
@@ -18,9 +29,16 @@ services:
       - ./php_apache/log:/var/log/fs2/
       # Mount php config
       - ./php_apache/my_php.ini:/usr/local/etc/php/conf.d/my_php.ini
+    networks:
+      - webnet
 
   mysql:
     image: mysql:latest   # 镜像源
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
     ports:
       - "3306:3306"  # 主机：容器端口的映射
     volumes:
@@ -28,3 +46,7 @@ services:
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf    # 数据库配置文件
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes  # root无密码登陆
+    networks:
+      - webnet
+networks:
+  webnet:
